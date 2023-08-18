@@ -10,6 +10,7 @@ const validationSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
   employeeId: Yup.string().required("Employee ID is required"),
   phone: Yup.string().required("Phone number is required"),
+  email: Yup.string().required("Wipro Mail Id is required"),
   radioButtonValue: Yup.string().required("Select at least one skill"),
 });
 
@@ -70,6 +71,36 @@ const UserDetails = () => {
                         />
                         <ErrorMessage
                           name="name"
+                          component="div"
+                          className="error text-red-500"
+                        />
+                      </div>
+                    </td>
+                    </tr>
+                    <tr className="p-2 h-12">
+                    <td
+                      className={`text-left ${
+                        touched.mail && errors.mail
+                          ? "align-top"
+                          : "align-middle"
+                      }`}
+                    >
+                      <label htmlFor="email">Wipro Email:</label>
+                    </td>
+                    <td className="text-right">
+                      <div>
+                        <Field
+                          type="text"
+                          id="email"
+                          name="email"
+                          className={`w-96 border-[1px] rounded-md ${
+                            touched.email && errors.email
+                              ? "border-red-500"
+                              : "border-indigo-600"
+                          }`}
+                        />
+                        <ErrorMessage
+                          name="email"
                           component="div"
                           className="error text-red-500"
                         />
