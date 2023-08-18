@@ -40,7 +40,7 @@ export const LandingPage = () => {
       <section
         style={{
           backgroundImage: `url(${League})`,
-          backgroundSize: "auto 100%",
+          backgroundSize: "100% 100%",
           backgroundPosition: "center",
         }}
         className="register w-full md:w-1/2 h-3/4 md:h-full flex bg-black rounded-r-lg flex-col justify-center content-center items-center bg-cover bg-no-repeat"

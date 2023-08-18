@@ -1,12 +1,16 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useRef } from "react";
 import * as Yup from "yup";
+import Bowler from "../Images/Bowler.png";
+import Spinner from "../Images/Spinner.png";
+import Fast from "../Images/Fast.png";
 
 const validationSchema = Yup.object().shape({
   picture: Yup.mixed().required("Please upload your picture"),
   name: Yup.string().required("Name is required"),
   employeeId: Yup.string().required("Employee ID is required"),
   phone: Yup.string().required("Phone number is required"),
+  radioButtonValue: Yup.string().required("Select at least one skill"),
 });
 
 const UserDetails = () => {
@@ -15,6 +19,8 @@ const UserDetails = () => {
     name: "",
     employeeId: "",
     phone: "",
+    radioButtonValue: "",
+    skillLevel: "intermediate",
   };
   const fileInputRef = useRef(null);
 
@@ -24,13 +30,13 @@ const UserDetails = () => {
 
   const handleSubmit = (values) => {
     console.log("Form values:", values);
-    // Perform submission logic here
   };
 
   return (
+    <>
     <div className="flex w-full h-full justify-center">
-      <div className="flex w-full h-full md:w-2/3 justify-content rounded-xl border shadow-md drop-shadow-md flex-col">
-        <h1 className="text-xl mx-auto my-10">User Details Form</h1>
+      <div className="flex w-full min-h-[700px] md:w-2/3 rounded-xl border shadow-md drop-shadow-md flex-col">
+        <h1 className="text-3xl mx-auto my-4">User Details Form</h1>
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
@@ -71,11 +77,13 @@ const UserDetails = () => {
                     </td>
                   </tr>
                   <tr className="p-2 h-12">
-                    <td className={`text-left ${
+                    <td
+                      className={`text-left ${
                         touched.employeeId && errors.employeeId
                           ? "align-top"
                           : "align-middle"
-                      }`}>
+                      }`}
+                    >
                       <label htmlFor="employeeId">Employee ID:</label>
                     </td>
                     <td className="text-right">
@@ -99,11 +107,13 @@ const UserDetails = () => {
                     </td>
                   </tr>
                   <tr className="p-2 h-12">
-                    <td className={`text-left ${
+                    <td
+                      className={`text-left ${
                         touched.phone && errors.phone
                           ? "align-top"
                           : "align-middle"
-                      }`}>
+                      }`}
+                    >
                       <label htmlFor="phone">Mobile:</label>
                     </td>
                     <td className="text-right">
@@ -127,14 +137,14 @@ const UserDetails = () => {
                     </td>
                   </tr>
                 </table>
-                <div className="flex items-center">
-                <div
+                <div className="flex flex-col justify-center items-center">
+                  <div
                     className={`w-36 h-36 rounded-full border-[1px] border-dashed flex justify-center items-center ${
                       touched.picture && errors.picture
-                        ? 'border-red-500'
-                        : 'border-indigo-600 cursor-pointer'
+                        ? "border-red-500"
+                        : "border-indigo-600 cursor-pointer"
                     }`}
-                    onClick = {handleUploadClick}
+                    onClick={handleUploadClick}
                   >
                     {values.picture ? (
                       <img
@@ -152,23 +162,109 @@ const UserDetails = () => {
                     name="picture"
                     ref={fileInputRef}
                     onChange={(event) => {
-                        console.log(event.currentTarget.files[0], values.picture, "HEYY");
+                      console.log(
+                        event.currentTarget.files[0],
+                        values.picture,
+                        "HEYY"
+                      );
                       setFieldValue("picture", event.currentTarget.files[0]);
                     }}
                     className="hidden"
                   />
                   {touched.picture && errors.picture && (
-                    <div className="error">{errors.picture}</div>
+                    <div className="error text-red-500">{errors.picture}</div>
                   )}
                 </div>
               </div>
+              <div className="flex justify-between py-2 px-20">
+                <p className="py-2 h-12"> WHAT'S YOUR GIG ON THE FIELD ?</p>
+                <div className="w-36"></div>
+                   
+              </div>
+              <div>
+                <div className="flex space-evenly w-full justify-around p-6">
+                  <label className="flex">
+                    <Field
+                      type="radio"
+                      name="radioButtonValue"
+                      value="Batsman"
+                      className="mr-2"
+                    />
+                    <img
+                      src={Bowler}
+                      alt="Profile"
+                      className="w-32 h-32 rounded-full object-cover"
+                    />
+                  </label>
+                  <label className="flex">
+                    <Field
+                      type="radio"
+                      name="radioButtonValue"
+                      value="Fast Bowler"
+                      className="mr-2"
+                    />
+                    <img
+                      src={Fast}
+                      alt="Profile"
+                      className="w-32 h-32 rounded-full object-cover"
+                    />
+                  </label>
+                  <label className="flex">
+                    <Field
+                      type="radio"
+                      name="radioButtonValue"
+                      value="Spin Bowler"
+                      className="mr-2"
+                    />
+                    <img
+                      src={Spinner}
+                      alt="Profile"
+                      className="w-32 h-32 rounded-full object-cover"
+                    />
+                  </label>
+                </div>
+                <ErrorMessage
+                  name="radioButtonValue"
+                  component="div"
+                  className="error text-red-500 self-start"
+                />
+              </div>
+              <div className="flex justify-around p-4">
+              <table className="border-spacing-y-2.5">
+                  <tr className="p-2 h-12">
+                    <td
+                    >
+                      <label htmlFor="skillLevel" className="mr-2">Select Skill Level:</label>
+                    </td>
+                    <td className="text-right">
+                      <div>
+                      <Field as="select" name="skillLevel" className="w-80">
+                  <option value="beginner">Beginner</option>
+                  <option value="intermediate">Intermediate</option>
+                  <option value="master">Master</option>
+                </Field>
+                      </div>
+                    </td>
+                  </tr>
+                  </table>
+                <div className="w-36"></div>
+              </div>
 
-              <button type="submit" className="w-32 bg-sky-500 p-2 rounded-md">Submit</button>
+              <button
+                type="submit"
+                className="w-32 bg-sky-500 p-2 rounded-md mt-6"
+              >
+                Submit
+              </button>
             </Form>
           )}
         </Formik>
       </div>
     </div>
+    <div className="h-16 w-full">
+        
+    </div>
+    </>
   );
 };
 
