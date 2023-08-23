@@ -27,12 +27,21 @@ const UserDetails = () => {
   const fileInputRef = useRef(null);
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  
 
   const handleUploadClick = () => {
     fileInputRef.current.click();
+    setErrorMessage("");
+    setSuccessMessage("");
   };
 
+  const handleFocus = () => {
+    setErrorMessage("");
+    setSuccessMessage("");
+  }
+
   const handleSubmit = (values, { resetForm }) => {
+    console.log("Form values:", values);
     fetch("http://127.0.0.1:5000/players", {
       method: "POST",
       headers: {
@@ -98,6 +107,7 @@ const UserDetails = () => {
                                 ? "border-red-500"
                                 : "border-indigo-600"
                             }`}
+                            onFocus={handleFocus}
                           />
                           <ErrorMessage
                             name="name"
@@ -128,6 +138,7 @@ const UserDetails = () => {
                                 ? "border-red-500"
                                 : "border-indigo-600"
                             }`}
+                            onFocus={handleFocus}
                           />
                           <ErrorMessage
                             name="email"
@@ -158,6 +169,7 @@ const UserDetails = () => {
                                 ? "border-red-500"
                                 : "border-indigo-600"
                             }`}
+                            onFocus={handleFocus}
                           />
                           <ErrorMessage
                             name="employeeId"
@@ -188,6 +200,7 @@ const UserDetails = () => {
                                 ? "border-red-500"
                                 : "border-indigo-600"
                             }`}
+                            onFocus={handleFocus}
                           />
                           <ErrorMessage
                             name="phone"
@@ -249,6 +262,7 @@ const UserDetails = () => {
                         name="radioButtonValue"
                         value="Batsman"
                         className="mr-2"
+                        onClick={handleFocus}
                       />
                       <img
                         src={Bowler}
@@ -262,6 +276,7 @@ const UserDetails = () => {
                         name="radioButtonValue"
                         value="Fast Bowler"
                         className="mr-2"
+                        onClick={handleFocus}
                       />
                       <img
                         src={Fast}
@@ -275,6 +290,7 @@ const UserDetails = () => {
                         name="radioButtonValue"
                         value="Spin Bowler"
                         className="mr-2"
+                        onClick={handleFocus}
                       />
                       <img
                         src={Spinner}
